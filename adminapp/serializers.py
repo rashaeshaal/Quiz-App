@@ -38,17 +38,18 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['id', 'quiz', 'text', 'option_1', 'option_2', 'option_3', 'option_4', 'correct_answer']
 class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
+    title = serializers.CharField(
+        validators=[
+            UniqueValidator(
+                queryset=Quiz.objects.all(),
+                message="A quiz with this title already exists."
+            )
+        ]
+    )
     
     class Meta:
         model = Quiz
         fields = ['id', 'title', 'category', 'is_active', 'questions']
-        validators = [
-            UniqueValidator(
-                queryset=Quiz.objects.all(),
-                field='title',
-                message="A quiz with this title already exists."
-            )
-        ]
 class QuizSubmissionSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     quiz = QuizSerializer(read_only=True)
