@@ -1,7 +1,7 @@
 # adminapp/serializers.py
 from rest_framework import serializers
 from .models import User, Category, Quiz, Question, QuizSubmission
-
+from rest_framework.validators import UniqueValidator
 # adminapp/serializers.py
 from rest_framework import serializers
 from .models import User
@@ -38,9 +38,17 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['id', 'quiz', 'text', 'option_1', 'option_2', 'option_3', 'option_4', 'correct_answer']
 class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Quiz
         fields = ['id', 'title', 'category', 'is_active', 'questions']
+        validators = [
+            UniqueValidator(
+                queryset=Quiz.objects.all(),
+                field='title',
+                message="A quiz with this title already exists."
+            )
+        ]
 class QuizSubmissionSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     quiz = QuizSerializer(read_only=True)

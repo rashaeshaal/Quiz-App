@@ -79,8 +79,25 @@ class PastSubmissionsView(APIView):
         if request.user.is_admin:
             return Response({'error': 'Admins cannot view user submissions'}, status=status.HTTP_403_FORBIDDEN)
 
-        submissions = Submission.objects.filter(user=request.user).select_related('quiz')
-        return Response({
-            'user': {'email': request.user.email, 'name': request.user.name},
-            'submissions': [submission.pop('user') or submission for submission in SubmissionSerializer(submissions, many=True).data]
-        })
+        submissions = Submission.objects.filter(user=request.user).select_related('quiz').prefetch_related('answers')
+        serializer = SubmissionSerializer(submissions, many=True)
+        
+       
+        response_data = {
+            'user': {
+                'email': request.user.email,
+                'name': request.user.name
+            },
+            'submissions': []
+        }
+        
+       
+        for submission in serializer.data:
+            submission.pop('user', None)  
+            response_data['submissions'].append(submission)
+        
+        return Response(response_data)
+
+
+    
+  

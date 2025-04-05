@@ -16,7 +16,8 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data={**request.data, 'is_admin': True, 'is_superuser': True, 'is_staff': True})
         if serializer.is_valid():
-            return Response(serializer.save(), status=status.HTTP_201_CREATED)
+            user = serializer.save()  
+            return Response(serializer.data, status=status.HTTP_201_CREATED) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 #admin login    
