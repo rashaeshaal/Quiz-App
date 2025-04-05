@@ -195,8 +195,78 @@ All endpoints (except registration and login) require authentication via **JWT t
 }
 ```
 
+### **View User Submissions**
+**URL:** `GET /quiz/submissions/`
+**Headers:** `Authorization: Bearer <access_token>`
+
+**Response:**
+```json
+[
+    {
+        "id": 1,
+        "user": 5,
+        "quiz_id": 1,
+        "quiz_title": "GK Quiz",
+        "score": 1,
+        "submitted_at": "2025-04-05T09:16:56.614Z",
+        "answers": [
+            {
+                "question_id": 1,
+                "selected_option": "4",
+                "correct_answer": "10"
+            }
+        ]
+    }
+]
+
+
 ---
 ## **User APIs**
+### **Register User**
+**URL:** POST /users/register/
+
+**Request:**
+json
+{
+    "email": "test@example.com",
+    "name": "Test User",
+    "password": "user123"
+}
+
+
+**Response:**
+json
+{
+    "email": "test@example.com",
+    "name": "Test User",
+    "is_admin": false
+}
+
+### **Login User**
+**URL:** `POST /users/handlelogin/`
+
+**Request:**
+```json
+{
+    "email": "test@example.com",
+    "password": "user123"
+}
+```
+
+**Response:**
+```json
+{
+    "refresh": "<refresh_token>",
+    "access": "<access_token>",
+    "user": {
+        "email": "user@example.com",
+        "name": "User Name",
+        "is_admin": false
+    }
+}
+```
+
+
 
 ### **View Active Quizzes**
 **URL:** `GET /users/quizzes/active/`
