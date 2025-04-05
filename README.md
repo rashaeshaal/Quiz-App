@@ -276,10 +276,21 @@ All endpoints (except registration and login) require authentication via **JWT t
 ```json
 [
     {
-        "id": 1,
-        "title": "GK Quiz",
-        "category": 1,
-        "is_active": true
+        "id": 6,
+        "title": "maths Quiz 1",
+        "category": 3,
+        "is_active": true,
+        "questions": [
+            {
+                "id": 6,
+                "text": "What is 10+3?",
+                "option_1": "2",
+                "option_2": "3",
+                "option_3": "4",
+                "option_4": "5",
+                "quiz": 6
+            }
+        ]
     }
 ]
 ```
