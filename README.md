@@ -47,9 +47,11 @@ All endpoints (except registration and login) require authentication via **JWT t
     "refresh": "<refresh_token>",
     "access": "<access_token>",
     "user": {
-        "email": "user@example.com",
-        "name": "User Name",
-        "is_admin": false
+        "email": "admin@example.com",
+        "name": "Admin User",
+        "is_admin": true
+        "is_superuser": true
+
     }
 }
 ```
