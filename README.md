@@ -1,7 +1,7 @@
 # Quiz App API Documentation
 
 ## **Introduction**
-The Quiz App API provides endpoints for **Admin** and **User** roles to manage and participate in quizzes. Admins can create quizzes, questions, and view user submissions. Users can register, attempt quizzes, and view their scores.
+The Quiz App API provides endpoints for **Admin** and **User** roles to manage and participate in quizzes. Admins can create, edit, and delete quizzes and questions, while users can register, attempt quizzes, and view their scores.
 
 ---
 ## **Authentication**
@@ -59,7 +59,6 @@ All endpoints (except registration and login) require authentication via **JWT t
 
 ### **Create Category**
 **URL:** `POST /quiz/categories/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Request:**
 ```json
@@ -76,9 +75,26 @@ All endpoints (except registration and login) require authentication via **JWT t
 }
 ```
 
+### **Edit Category**
+**URL:** `PUT /quiz/categories/{id}/`
+
+**Request:**
+```json
+{
+    "name": "Updated Category Name"
+}
+```
+
+**Response:**
+```json
+{
+    "id": 1,
+    "name": "Updated Category Name"
+}
+```
+
 ### **Create Quiz**
 **URL:** `POST /quiz/quizzes/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Request:**
 ```json
@@ -95,14 +111,33 @@ All endpoints (except registration and login) require authentication via **JWT t
     "id": 1,
     "title": "GK Quiz",
     "category": 1,
-    "is_active": true,
-    "questions": []
+    "is_active": true
+}
+```
+
+### **Edit Quiz**
+**URL:** `PUT /quiz/quizzes/{id}/`
+
+**Request:**
+```json
+{
+    "title": "Updated Quiz Title",
+    "is_active": false
+}
+```
+
+**Response:**
+```json
+{
+    "id": 1,
+    "title": "Updated Quiz Title",
+    "category": 1,
+    "is_active": false
 }
 ```
 
 ### **Create Question**
 **URL:** `POST /quiz/questions/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Request:**
 ```json
@@ -131,58 +166,40 @@ All endpoints (except registration and login) require authentication via **JWT t
 }
 ```
 
-### **View User Submissions**
-**URL:** `GET /quiz/submissions/`
-**Headers:** `Authorization: Bearer <access_token>`
+### **Edit Question**
+**URL:** `PUT /quiz/questions/{id}/`
+
+**Request:**
+```json
+{
+    "text": "Updated Question Text",
+    "option_1": "1",
+    "option_2": "5",
+    "option_3": "10",
+    "option_4": "15",
+    "correct_answer": "15"
+}
+```
 
 **Response:**
 ```json
-[
-    {
-        "id": 1,
-        "user": 5,
-        "quiz_id": 1,
-        "quiz_title": "GK Quiz",
-        "score": 1,
-        "submitted_at": "2025-04-05T09:16:56.614Z",
-        "answers": [
-            {
-                "question_id": 1,
-                "selected_option": "4",
-                "correct_answer": "10"
-            }
-        ]
-    }
-]
+{
+    "id": 1,
+    "quiz": 1,
+    "text": "Updated Question Text",
+    "option_1": "1",
+    "option_2": "5",
+    "option_3": "10",
+    "option_4": "15",
+    "correct_answer": "15"
+}
 ```
 
 ---
 ## **User APIs**
 
-### **Register User**
-**URL:** `POST /users/register/`
-
-**Request:**
-```json
-{
-    "email": "test@example.com",
-    "name": "Test User",
-    "password": "user123"
-}
-```
-
-**Response:**
-```json
-{
-    "email": "test@example.com",
-    "name": "Test User",
-    "is_admin": false
-}
-```
-
 ### **View Active Quizzes**
 **URL:** `GET /users/quizzes/active/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Response:**
 ```json
@@ -198,7 +215,6 @@ All endpoints (except registration and login) require authentication via **JWT t
 
 ### **Submit Quiz**
 **URL:** `POST /users/submissions/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Request:**
 ```json
@@ -231,7 +247,6 @@ All endpoints (except registration and login) require authentication via **JWT t
 
 ### **View Submission History**
 **URL:** `GET /users/past-submissions/`
-**Headers:** `Authorization: Bearer <access_token>`
 
 **Response:**
 ```json
@@ -258,6 +273,7 @@ All endpoints (except registration and login) require authentication via **JWT t
     ]
 }
 ```
-
 ---
+## **Conclusion**
+This documentation provides detailed API specifications for the **Quiz App**.
 
