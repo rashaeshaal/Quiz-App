@@ -30,14 +30,14 @@ All endpoints (except registration and login) require authentication via **JWT t
 }
 ```
 
-### **Login Admin/User**
+### **Login Admin**
 **URL:** `POST /quiz/login/`
 
 **Request:**
 ```json
 {
-    "email": "user@example.com",
-    "password": "password123"
+    "email": "admin@example.com",
+    "password": "admin123"
 }
 ```
 
