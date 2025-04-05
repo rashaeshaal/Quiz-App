@@ -52,7 +52,7 @@ class CategoryListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class CategoryDetailView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def get(self, request, pk):
         category = Category.objects.get(pk=pk)
