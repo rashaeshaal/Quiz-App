@@ -9,6 +9,6 @@ class Submission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
 class UserAnswer(models.Model):
-    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name="answers")
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    selected_option = models.IntegerField()
+    selected_option = models.CharField(max_length=255)
