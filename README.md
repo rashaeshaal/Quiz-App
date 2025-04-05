@@ -221,29 +221,28 @@ All endpoints (except registration and login) require authentication via **JWT t
     }
 ]
 
-
----
+```
 ## **User APIs**
 ### **Register User**
 **URL:** POST /users/register/
 
 **Request:**
-json
+```json
 {
     "email": "test@example.com",
     "name": "Test User",
     "password": "user123"
 }
 
-
+```
 **Response:**
-json
+```json
 {
     "email": "test@example.com",
     "name": "Test User",
     "is_admin": false
 }
-
+```
 ### **Login User**
 **URL:** `POST /users/handlelogin/`
 
